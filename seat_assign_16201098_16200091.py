@@ -12,6 +12,15 @@ c = conn.cursor()
 c.execute("SELECT name FROM sqlite_master WHERE type='table';") #inspect database for tables
 print(c.fetchall())
 
+def read_file(filename):
+    df = pd.read_csv(filename, sep = ",", names = ["name", "grpsize"])
+    psgnames = df.reset_index()['name'].values.astype(str).tolist()
+    grpsize = df.reset_index()['grpsize'].values.astype(int).tolist()
+    #print(psgnames)
+    #print(grpsize)
+    
+read_file("bookings.csv")
+
 # read rows_cols table from database for seating configuration
 total_rows = c.execute("SELECT * FROM rows_cols;").fetchone()[0] # no. of rows in plane
 seat_config = c.execute("SELECT * FROM rows_cols;").fetchone()[1] # seat configuration
