@@ -101,3 +101,27 @@ for (i,j) in zip(psgnames, grpsize):
                             d_num[k] -= len(seat_config)
                             seat_balance -= len(seat_config)
                             break
+                elif max((d_num[x]) for x in d_num) >= y: #if balance of unassigned booking is less than no. of seats in a row and no need to be split
+                    for k in range(1, total_rows+1):
+                        if len(d_seat[k]) >= y:
+                            n = list(d_seat[k][:y])
+                            for m in n:
+                                c.execute("UPDATE seating SET name='%s' WHERE row=%d AND seat='%s';" %(i, k, m))
+                                y -= 1
+                                d_seat[k] = d_seat[k].replace(d_seat[k][:1],"")
+                                d_num[k] -= 1
+                                seat_balance -= 1
+                            break
+                elif j <= len(seat_config): #if unassigned booking is less than no. of seats in a row and needs to be split
+                    for k in range(1, total_rows+1):
+                        if len(d_seat[k]) > 0:
+                            y = j
+                            while y != 0:
+                                n = list(d_seat[k])
+                                for m in n:
+                                    c.execute("UPDATE seating SET name='%s' WHERE row=%d AND seat='%s';" %(i, k, m))
+                                    y -= 1
+                                    d_seat[k] = d_seat[k].replace(d_seat[k][:1],"")
+                                    d_num[k] -= 1
+                                    seat_balance -= 1
+                                break
