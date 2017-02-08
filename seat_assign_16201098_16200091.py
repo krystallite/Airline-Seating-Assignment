@@ -34,3 +34,16 @@ num_row = [a for a in range(1,total_rows+1)]
 d_seat = {r: seat_config for r in num_row}     #dictionary for seat_config balance in each row
 d_num = {r: len(seat_config) for r in num_row} #dictionary for no. of seats balance in each row
 
+# check seating file and create list of pre-booked seats 
+c.execute("SELECT * FROM seating where name != '';")
+pb_row = [] # list of rows taken
+pb_seat = [] # corresponding seat_config taken
+for item in c:
+    #pre_booked.append(c)
+    row, seat, psgname = item
+    pb_row.append(row)
+    pb_seat.append(seat)
+
+seat_balance -= len(pb_row)
+print("seat balance = %d" %seat_balance)
+
