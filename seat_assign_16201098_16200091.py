@@ -84,3 +84,20 @@ for (i,j) in zip(psgnames, grpsize):
                         d_num[k] -= j
                         seat_balance -= j
                         break
+    elif j > len(seat_config): #booking is more more than no. of seats in row and members in booking needs to be split
+            count_sep += j
+            c.execute("UPDATE metrics SET passengers_separated=%d;" %count_sep)
+            print("Passengers are separated: %s, %d" %(i,j))
+            y = j
+            while y != 0:
+                if y >= len(seat_config): #when unassigned booking is more than no. of seats in a row
+                    for k in range(1, total_rows+1):
+                        if len(d_seat[k]) == len(seat_config): #to assign booking to an empty row
+                            n = list(d_seat[k][:len(seat_config)])
+                            for m in n:
+                                c.execute("UPDATE seating SET name='%s' WHERE row=%d AND seat='%s';" %(i, k, m))
+                                y -= 1
+                            d_seat[k] = d_seat[k].replace(d_seat[k][:len(seat_config)],"")
+                            d_num[k] -= len(seat_config)
+                            seat_balance -= len(seat_config)
+                            break
