@@ -125,3 +125,7 @@ for (i,j) in zip(psgnames, grpsize):
                                     d_num[k] -= 1
                                     seat_balance -= 1
                                 break
+    else:
+        count_rej += j
+        c.execute("UPDATE metrics SET passengers_refused=%d;" %count_rej)       
+        print("Passenger is rejected: %s" %i)
