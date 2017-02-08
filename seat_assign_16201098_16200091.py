@@ -75,7 +75,7 @@ for (i,j) in zip(psgnames, grpsize):
                     d_num[k] -= j
                     seat_balance -= j
                     break
-    elif j <= len(seat_config): #members in booking needs to be split
+        elif j <= len(seat_config): #members in booking needs to be split
             count_sep += j
             c.execute("UPDATE metrics SET passengers_separated=%d;" %count_sep)
             print("Passengers are separated: %s, %d" %(i,j))
@@ -91,7 +91,7 @@ for (i,j) in zip(psgnames, grpsize):
                         d_num[k] -= j
                         seat_balance -= j
                         break
-    elif j > len(seat_config): #booking is more more than no. of seats in row and members in booking needs to be split
+        elif j > len(seat_config): #booking is more more than no. of seats in row and members in booking needs to be split
             count_sep += j
             c.execute("UPDATE metrics SET passengers_separated=%d;" %count_sep)
             print("Passengers are separated: %s, %d" %(i,j))
