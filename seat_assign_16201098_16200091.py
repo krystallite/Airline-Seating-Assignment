@@ -18,44 +18,47 @@ print(c.fetchall())
 
 def read_file(filename):
     df = pd.read_csv(filename, sep = ",", names = ["name", "grpsize"])
-    psgnames = df.reset_index()['name'].values.astype(str).tolist()
-    grpsize = df.reset_index()['grpsize'].values.astype(int).tolist()
-    #print(psgnames)
-    #print(grpsize)
+    psgnames = df.reset_index()['name'].values.astype(str).tolist()   #list of passenger names
+    grpsize = df.reset_index()['grpsize'].values.astype(int).tolist() #corresponding list of group size
     
-read_file("bookings.csv")
+    return psgnames, grpsize
+    
+psgnames, grpsize = read_file(bookings)
 
-# read rows_cols table from database for seating configuration
-total_rows = c.execute("SELECT * FROM rows_cols;").fetchone()[0] # no. of rows in plane
-seat_config = c.execute("SELECT * FROM rows_cols;").fetchone()[1] # seat configuration
-seat_balance = total_rows*len(seat_config)
+def read_db(): # read rows_cols table from database for seating configuration
+    total_rows = c.execute("SELECT * FROM rows_cols;").fetchone()[0] # no. of rows in plane
+    seat_config = c.execute("SELECT * FROM rows_cols;").fetchone()[1] # seat configuration
+    seat_balance = total_rows*len(seat_config)
 
-print("Total rows in this airplane: %d" %total_rows)
-print("Seat configuration: %s" %seat_config)
+    print("Total rows in this airplane: %d" %total_rows)
+    print("Seat configuration: %s" %seat_config)
 
-# create dictionary of rows as keys and seat_config as values
-num_row = [a for a in range(1,total_rows+1)]
-d_seat = {r: seat_config for r in num_row}     #dictionary for seat_config balance in each row
-d_num = {r: len(seat_config) for r in num_row} #dictionary for no. of seats balance in each row
+    # create dictionary of rows as keys and seat_config as values
+    num_row = [a for a in range(1,total_rows+1)]   #list for number of rows in seating configuration
+    d_seat = {r: seat_config for r in num_row}     #dictionary for seat_config balance in each row
+    d_num = {r: len(seat_config) for r in num_row} #dictionary for no. of seats balance in each row
+    
+    # check seating file and create list of pre-booked seats        
+    c.execute("SELECT * FROM seating where name != '';")
+    pb_row = [] # list of rows taken
+    pb_seat = [] # corresponding seat_config taken
+    for item in c:
+        row, seat, psgname = item
+        pb_row.append(row)
+        pb_seat.append(seat)
 
-# check seating file and create list of pre-booked seats 
-c.execute("SELECT * FROM seating where name != '';")
-pb_row = [] # list of rows taken
-pb_seat = [] # corresponding seat_config taken
-for item in c:
-    #pre_booked.append(c)
-    row, seat, psgname = item
-    pb_row.append(row)
-    pb_seat.append(seat)
+    seat_balance -= len(pb_row)
+    print("seat balance = %d" %seat_balance)
 
-seat_balance -= len(pb_row)
-print("seat balance = %d" %seat_balance)
-
-# update dictionary removing pre-booked seats
-for (row, seat) in zip(pb_row, pb_seat):
+    # update dictionary removing pre-booked seats
+    for (row, seat) in zip(pb_row, pb_seat):
         num = list(d_seat.keys())[row-1]
         d_seat[num] = d_seat[num].replace(seat,"")
         d_num[row] -= 1
+    
+    return total_rows, seat_config, seat_balance, num_row, d_seat, d_num
+        
+total_rows, seat_config, seat_balance, num_row, d_seat, d_num = read_db()
 
 count_rej = 0
 count_sep = 0
