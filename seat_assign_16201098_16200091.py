@@ -6,8 +6,12 @@
 import sqlite3
 import pandas as pd
 import numpy as np
+import sys
 
-conn = sqlite3.connect('airline_seating.db')
+airline_database = sys.argv[1]
+bookings = sys.argv[2]
+
+conn = sqlite3.connect(airline_database)
 c = conn.cursor()
 c.execute("SELECT name FROM sqlite_master WHERE type='table';") #inspect database for tables
 print(c.fetchall())
