@@ -47,3 +47,8 @@ for item in c:
 seat_balance -= len(pb_row)
 print("seat balance = %d" %seat_balance)
 
+# update dictionary removing pre-booked seats
+for (row, seat) in zip(pb_row, pb_seat):
+        num = list(d_seat.keys())[row-1]
+        d_seat[num] = d_seat[num].replace(seat,"")
+        d_num[row] -= 1
