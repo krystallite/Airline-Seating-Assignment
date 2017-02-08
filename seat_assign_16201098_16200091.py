@@ -52,3 +52,17 @@ for (row, seat) in zip(pb_row, pb_seat):
         num = list(d_seat.keys())[row-1]
         d_seat[num] = d_seat[num].replace(seat,"")
         d_num[row] -= 1
+
+
+for (i,j) in zip(psgnames, grpsize):
+    if seat_balance >= j: #booking can be accepted
+        if max((d_num[x]) for x in d_num) >= j: #all members in booking can be seated together
+            for k in range(1, total_rows+1):
+                if len(d_seat[k]) >= j:
+                    n = list(d_seat[k][:j])
+                    for m in n:
+                        c.execute("UPDATE seating SET name='%s' WHERE row=%d AND seat='%s';" %(i, k, m))
+                    d_seat[k] = d_seat[k].replace(d_seat[k][:j],"")
+                    d_num[k] -= j
+                    seat_balance -= j
+                    break
