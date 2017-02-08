@@ -53,6 +53,8 @@ for (row, seat) in zip(pb_row, pb_seat):
         d_seat[num] = d_seat[num].replace(seat,"")
         d_num[row] -= 1
 
+count_rej = 0
+count_sep = 0
 
 for (i,j) in zip(psgnames, grpsize):
     if seat_balance >= j: #booking can be accepted
@@ -66,3 +68,19 @@ for (i,j) in zip(psgnames, grpsize):
                     d_num[k] -= j
                     seat_balance -= j
                     break
+    elif j <= len(seat_config): #members in booking needs to be split
+            count_sep += j
+            c.execute("UPDATE metrics SET passengers_separated=%d;" %count_sep)
+            print("Passengers are separated: %s, %d" %(i,j))
+            for k in range(1, total_rows+1):
+                if len(d_seat[k]) > 0:
+                    y = j
+                    while y != 0:
+                        n = list(d_seat[k])
+                        for m in n:
+                            c.execute("UPDATE seating SET name='%s' WHERE row=%d AND seat='%s';" %(i, k, m))
+                            y -= 1
+                        d_seat[k] = d_seat[k].replace(d_seat[k][:j],"")
+                        d_num[k] -= j
+                        seat_balance -= j
+                        break
