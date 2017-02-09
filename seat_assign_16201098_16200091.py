@@ -136,3 +136,6 @@ for (i,j) in zip(psgnames, grpsize):
         count_rej += j
         c.execute("UPDATE metrics SET passengers_refused=%d;" %count_rej)       
         print("Passenger is rejected: %s" %i)
+
+conn.commit()
+conn.close()
