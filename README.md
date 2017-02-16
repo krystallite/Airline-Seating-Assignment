@@ -1,6 +1,6 @@
 # Seat Assignment
 
-'''
+
 To run the python script, do the following:
 
 1. Open up command prompt
@@ -41,7 +41,7 @@ Check if the maximum available seats in each row can accommodate the booking. If
 
 Step 3 (Scenario A1 - small party size and memebers can be seated together) 
 
-Assign seats to the row that can accommodate all members in the party together. Update dictionaries, counter seat_balance and seatings table in database. Proceed to Step 8.
+Assign seats to the row that can accommodate all members in the party together. Update dictionaries, counter seat_balance and seating table in database. Proceed to Step 8.
 
 Step 4 
 
@@ -49,11 +49,11 @@ Check if the party size is less than or equal to the maximum number of seats in 
 
 Step 5 (Scenario A2 - small party size but members need to be split up)
 
-Members in the party need to be split up. Update counter count_sep and metrics table in database. Find next available seats and assign seats. Update dictionaries, counter seat_balance and seatings table in database. Proceed to Step 8.
+Members in the party need to be split up. Update counter count_sep and metrics table in database. Find next available seats and assign seats. Update dictionaries, counter seat_balance and seating table in database. Proceed to Step 8.
 
 Step 6 (Scenario A3 - large party size and members need to be split up)
 
-Party size is bigger than the maximum number of seats in a row. Update counter count_sep and metrics table in database. Seats are assigned by checking for entirely empty rows first. If empty rows are filled and not all party members are assigned a seat, then we check for the next available seat from the first row. Update dictionaries, counter seat_balance and seatings table in database. Proceed to Step 8.
+Party size is bigger than the maximum number of seats in a row. Update counter count_sep and metrics table in database. Seats are assigned by checking for entirely empty rows first. If empty rows are filled and not all party members are assigned a seat, then we check for the next available seat from the first row. Update dictionaries, counter seat_balance and seating table in database. Proceed to Step 8.
 
 Step 7 (Scenario B - booking cannot be accepted)
 
@@ -64,4 +64,3 @@ Step 8
 Retrieve next booking and return to Step 1.
 
 End of README file.
-'''
