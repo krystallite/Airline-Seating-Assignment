@@ -1,14 +1,18 @@
 # Seat Assignment
 
 
-## To run the python script, do the following:
+## Running the python script
+
+To run the python script, do the following:
 
 1. Open up command prompt.
 
 2. At the command line, key in the following format python seat_assign_16201098_16200091.py data.db bookings.csv, 
     where data.db is the name of an SQLite database and bookings.csv is a file representing the bookings, one per line.
 
-## This python script has been written to carry out the following before assigning seats to passengers in the booking.csv file:
+## Pre-processing steps
+
+This python script has been written to carry out the following before assigning seats to passengers in the booking.csv file:
 
 1. read user command and input as above
 2. connect to the data.db file via sqlite3
@@ -25,7 +29,9 @@
 2. Seat assignment is carried out on a left to right basis, regardless of when booking is made, including prebooked seats. Hence, with seating configuration of ACDF, in any row, seats will be assigned in the order A, C, D and F. Seats will not be assigned if the preceding seat has not been assigned. For example, for a booking of party size 1, seat C will not be assigned if seat A is available, seat A will be assigned instead of C.
 
 
-## The following steps will run to assign seats until all bookings in the csv file has been considered:
+## How the main function works
+
+The following steps will run to assign seats until all bookings in the csv file has been considered:
 
 ### Step 0
 
@@ -62,5 +68,14 @@ Booking cannot be accepted as number of available seats is less than party size.
 ### Step 8
 
 Retrieve next booking and return to Step 1.
+
+
+## Test files
+
+The "Test files.zip" contains the following:
+
+1. Sample bookings.csv and data.db provided in Blackboard
+2. bookings_test.csv - booking file with large groups (updated party size for Louis Cozzolino from 3 to 7 and Johnny McIntyre from 1 
+3. data_test.db - changed seat configuration in "rows_cols" table to 20 rows with ABCDEF and updated "seating" table accordingly
 
 End of README file.
