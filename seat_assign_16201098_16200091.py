@@ -149,6 +149,8 @@ def seat_assign():
             c.execute("UPDATE metrics SET passengers_refused=%d;" %count_rej)       
             print("Passenger is rejected: %s" %i)
     return 
-            
+
+seat_assign()
+
 conn.commit()                                                           # update db file with all the UPDATEs we have done so far
 conn.close()                                                            # Close connection to sqlite
