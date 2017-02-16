@@ -2,12 +2,16 @@
 
 '''
 To run the python script, do the following:
+
 1. Open up command prompt
+
 2. At the command line, key in python seat_assign_16201098_16200091.py data.db bookings.csv, 
     where data.db is the name of an SQLite database and bookings.csv is a file representing the bookings, one per line
 
 This python script has been written to carry out the following before assigning seats to passengers in the booking.csv file:
+
 1. read user command and input as above
+
 2. connect to the data.db file via sqlite3
 3. read a csv file which contains a list of passenger names and their groupsize and convert the data into two lists
 4. read the data.db file to check configuration of plane and check for occupied seats
