@@ -53,10 +53,10 @@ def read_db():                                                         # read ro
 
 # main function of the seat assignment
 def seat_assign(bookings):
-    psgnames, grpsize = read_file(bookings)
+    psgnames, grpsize = read_file(bookings)                             # run read_file function to read csv file
     total_rows, seat_config, seat_balance, num_row, d_seat, d_num = read_db()
-    count_rej = 0
-    count_sep = 0
+    count_rej = 0                                                       # counter to count how many passengers have been refused outright
+    count_sep = 0                                                       # counter to count how many passengers are seated away from any o/r member of their party
     for (i,j) in zip(psgnames, grpsize):                                # going through each booking in the booking list
         
         # SCENARIO A: We can accommodate the booking because there are still enough seats in the airplane
@@ -117,7 +117,7 @@ def seat_assign(bookings):
                                 d_num[k] -= len(seat_config)
                                 seat_balance -= len(seat_config)
                                 break
-                    elif max((d_num[x]) for x in d_num) >= y:           # Finding if there are still rows (max available seats in all rows) that can accommodate the remaining members to be seated together
+                    elif max((d_num[x]) for x in d_num) >= y:           # Finding if there are still empty rows (max available seats in all rows) that can accommodate the remaining members to be seated together
                         for k in range(1, total_rows+1):
                             if len(d_seat[k]) >= y:
                                 n = list(d_seat[k][:y])
@@ -128,7 +128,7 @@ def seat_assign(bookings):
                                     d_num[k] -= 1
                                     seat_balance -= 1
                                 break
-                    elif j <= len(seat_config):                         # find single seats for the remaining members of the group that have not been allocated seats
+                    elif j <= len(seat_config):                         # find any seat for the remaining members of the group that have not been allocated seats
                         for k in range(1, total_rows+1):
                             if len(d_seat[k]) > 0:
                                 y = j
