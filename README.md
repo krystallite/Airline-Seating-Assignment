@@ -11,7 +11,6 @@ To run the python script, do the following:
 This python script has been written to carry out the following before assigning seats to passengers in the booking.csv file:
 
 1. read user command and input as above
-
 2. connect to the data.db file via sqlite3
 3. read a csv file which contains a list of passenger names and their groupsize and convert the data into two lists
 4. read the data.db file to check configuration of plane and check for occupied seats
@@ -19,12 +18,14 @@ This python script has been written to carry out the following before assigning 
 6. three counters are also created to count the number of total available seats left (seat_balance), number of passengers refused outright (count_rej) and number of passengers seated away from any other member of their party (count_sep)
 
 Assumptions made:
+
 1. As long as passengers are allocated seats in the same row, next to one another consecutively as given in the seating configuration, any  aisle between seats are ignored. For example, if the seating congifuration of a plane is ACDF with an aisle between seats C and D, and a booking of size three are assigned seats 2C, 2D and 2F, they are considered to be seated together and not separated.
 
 2. Seat assignment is carried out on a left to right basis, regardless of when booking is made, including prebooked seats. Hence, with seating configuration of ACDF, in any row, seats will be assigned in the order A, C, D and F. Seats will not be assigned if the preceding seat has not been assigned. For example, for a booking of party size 1, seat C will not be assigned if seat A is available, seat A will be assigned instead of C.
 
 
 The following steps will run to assign seats until all bookings in the csv file has been considered:
+
 Step 0
 Read the first item in the two lists containing data from the csv file.
 
