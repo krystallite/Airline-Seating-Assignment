@@ -20,7 +20,6 @@ def read_file(filename):                                               # functio
     
     return psgnames, grpsize
     
-psgnames, grpsize = read_file(bookings)
 
 def read_db():                                                         # read rows_cols table from database for seating configuration
     total_rows = c.execute("SELECT * FROM rows_cols;").fetchone()[0]   # no. of rows in plane
@@ -53,7 +52,8 @@ def read_db():                                                         # read ro
     return total_rows, seat_config, seat_balance, num_row, d_seat, d_num
 
 # main function of the seat assignment
-def seat_assign():
+def seat_assign(bookings):
+    psgnames, grpsize = read_file(bookings)
     total_rows, seat_config, seat_balance, num_row, d_seat, d_num = read_db()
     count_rej = 0
     count_sep = 0
@@ -150,7 +150,7 @@ def seat_assign():
             print("Passenger is rejected: %s" %i)
     return 
 
-seat_assign()
+seat_assign(bookings)
 
 conn.commit()                                                           # update db file with all the UPDATEs we have done so far
 conn.close()                                                            # Close connection to sqlite
