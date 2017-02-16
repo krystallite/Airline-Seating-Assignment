@@ -3,10 +3,10 @@
 
 To run the python script, do the following:
 
-1. Open up command prompt
+1. Open up command prompt.
 
-2. At the command line, key in python seat_assign_16201098_16200091.py data.db bookings.csv, 
-    where data.db is the name of an SQLite database and bookings.csv is a file representing the bookings, one per line
+2. At the command line, key in the following format python seat_assign_16201098_16200091.py data.db bookings.csv, 
+    where data.db is the name of an SQLite database and bookings.csv is a file representing the bookings, one per line.
 
 This python script has been written to carry out the following before assigning seats to passengers in the booking.csv file:
 
